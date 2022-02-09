@@ -7,13 +7,12 @@ from markdown2 import Markdown
 
 from . import util
 
-entries = util.list_entries()
-
 class NewPage(forms.Form):
 	title = forms.CharField()
 
 
 def index(request):
+	entries = util.list_entries()
 	return render(request, "encyclopedia/index.html", {
     	"entries": entries,
     })   	
@@ -29,6 +28,7 @@ def title(request, title):
 		})
 
 def results(request):
+	entries = util.list_entries()
 	search = request.GET
 	for entry in entries:
 		if search["q"] == entry:
@@ -43,6 +43,7 @@ def results(request):
 	})
 
 def new_page(request):
+	entries = util.list_entries()
 	if request.method == "POST":
 		form = request.POST
 		title = form["title"]
